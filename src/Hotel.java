@@ -76,7 +76,7 @@ public class Hotel implements  ITestable{
             }
 
         }
-        return false;
+        return true;
 
     }
 
