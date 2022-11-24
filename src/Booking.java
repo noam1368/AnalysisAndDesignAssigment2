@@ -56,10 +56,23 @@ public class Booking implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        return true;
+        return constraint_1();
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
         return true;
+    }
+    public boolean constraint_1(){
+        RoomCategory.RoomType type_room =this.reservation.getRoomCategory().getType();
+        if((this.room.getRoomCategory().getType()== RoomCategory.RoomType.BASIC)&&(type_room== RoomCategory.RoomType.VIP)||
+        type_room== RoomCategory.RoomType.SUITE){
+            return false;
+        }
+        if(this.room.getRoomCategory().getType()==RoomCategory.RoomType.SUITE&&type_room==RoomCategory.RoomType.VIP){
+            return false;
+        }
+        return true;
+
+
     }
 }

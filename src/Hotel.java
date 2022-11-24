@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class Hotel implements  ITestable{
     private String name;
@@ -60,7 +61,7 @@ public class Hotel implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        return constraint_1();
+        return constraint_1() && constraint_2()&constraint_3();
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
@@ -78,6 +79,33 @@ public class Hotel implements  ITestable{
         }
         return true;
 
+    }
+    public boolean constraint_2(){
+        HashSet<Hotel> temp_hash_hotel = this.group.getHotels();
+        temp_hash_hotel.remove(this);
+        for(Hotel hotel:temp_hash_hotel){
+            for(Map.Entry<Service, HotelService> service_hash:hotel.getServices().entrySet()){
+                if(this.getServices().containsKey(service_hash.getKey())){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean constraint_3(){
+        double num_all_rooms= this.rooms.size()*0.1;
+        double counter =0;
+        for (HashMap.Entry<Integer, Room> set : this.rooms.entrySet()){
+            if(set.getValue().getRoomCategory().getType()== RoomCategory.RoomType.VIP){
+                counter++;
+            }
+        }
+        if(counter>num_all_rooms){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
 }

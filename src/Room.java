@@ -39,10 +39,24 @@ public class Room implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        return true;
+        return constraint_1();
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
         return true;
+    }
+    public boolean constraint_1(){
+        if(this.getRoomCategory().getType()!= RoomCategory.RoomType.VIP) {
+            return true;
+        }
+            for (HashMap.Entry<Service, HotelService> set :this.getHotel().getServices().entrySet()){
+                if(set.getKey().getClass()!=VipService.class){
+                    return false;
+                }
+
+
+            }
+
+return true;
     }
 }

@@ -4,6 +4,9 @@ public class Group implements  ITestable{
     private int groupId;
     HashSet<Hotel> hotels;
 
+
+
+
     public Group(int id){
         hotels = new HashSet<Hotel>();
         groupId = id;

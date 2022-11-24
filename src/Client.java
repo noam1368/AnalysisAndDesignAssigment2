@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 
 public class Client implements  ITestable {
@@ -45,10 +46,43 @@ public class Client implements  ITestable {
 
     @Override
     public boolean checkConstraints() {
-        return true;
+        return constraint_1()&&constraint_2();
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
         return true;
     }
+    public boolean constraint_1(){
+
+        for (HashMap.Entry<Hotel, ReservationSet> set :
+                this.reservationsHistory.entrySet()){
+            int counter= 0;
+            if (set.getValue().getReservations().size()>=5){
+                for( Reservation reservation : set.getValue().getReservations()){
+                    if(reservation.getRoomCategory().getType()== RoomCategory.RoomType.VIP){
+                        counter++;
+                    }
+                }
+                if(counter==0){
+                    return false;
+                }
+
+            }
+        }
+        return true;
+    }
+    public boolean constraint_2(){
+        for(Map.Entry<Hotel,ReservationSet> set:this.reservationsHistory.entrySet()){
+            for(Reservation reservation:set.getValue().getReservations()){
+                if(reservation.getRoomCategory().getType()== RoomCategory.RoomType.VIP&&reservation.getBookings()!=null){
+                    if(reservation.getBookings().getReview()==null){
+                        return false;
+                    }
+                }
+            }
+
+        }
+        return true;
+    }
+
 }

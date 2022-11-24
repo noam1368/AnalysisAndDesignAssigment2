@@ -36,10 +36,14 @@ public class ReservationSet implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        return true;
+        return constraint_1();
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
+        return true;
+    }
+
+    public boolean constraint_1(){
         return true;
     }
 }

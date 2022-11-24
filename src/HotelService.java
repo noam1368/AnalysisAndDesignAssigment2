@@ -1,5 +1,6 @@
 import java.awt.print.Book;
 import java.util.HashSet;
+import java.util.Map;
 
 public class HotelService implements  ITestable{
     private Hotel hotel;
@@ -49,10 +50,45 @@ public class HotelService implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        return true;
+        return constraint_1()&&constraint_2();
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
         return true;
+    }
+    public boolean constraint_1(){
+        double counter_reviews= 0;
+        double sum_rank=0;
+        if(this.hotel.getRate()==5){
+            for(Booking booking : this.givenServices){
+                if(booking.getReview()!=null){
+                    counter_reviews++;
+                    sum_rank= sum_rank+booking.getReview().getRank();
+                }
+            }
+            double average= sum_rank/counter_reviews;
+            if(average<=7.5){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        return true;
+    }
+    public boolean constraint_2(){
+        String service_name=this.service.getServiceName();
+        int counter_same_name_service=0;
+        for(Map.Entry<Service,HotelService> set:this.getHotel().getServices().entrySet()){
+            if(set.getKey().getServiceName().equals(service_name)){
+                counter_same_name_service++;
+            }
+        }
+        if(counter_same_name_service>1){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }
