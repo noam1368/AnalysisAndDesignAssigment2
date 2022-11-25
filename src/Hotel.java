@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class Hotel implements  ITestable{
     private String name;
@@ -61,7 +58,7 @@ public class Hotel implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        return constraint_1() && constraint_2()&constraint_3();
+        return constraint_1() && constraint_2()&&constraint_3()&&constraint_4();
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
@@ -106,6 +103,30 @@ public class Hotel implements  ITestable{
         else {
             return true;
         }
+    }
+    public  boolean constraint_4(){
+        Calendar calendar = Calendar.getInstance();
+
+        HashMap<Integer, Integer> year_per_profit = new HashMap<Integer,Integer>();
+        for(HashMap.Entry<Service,HotelService> set: this.getServices().entrySet()){
+            if(set.getValue().getGivenServices()!=null) {
+                for (Booking bookings_of_service : set.getValue().getGivenServices()) {
+                    Date date_of_service= bookings_of_service.getDate();
+                    calendar.setTime(date_of_service);
+                    Integer integer_casting= Integer.valueOf(calendar.get(Calendar.YEAR));
+
+                    year_per_profit.put(integer_casting,year_per_profit.get(integer_casting)+set.getValue().getPrice());
+                }
+
+            }
+        }
+        for(Integer year:year_per_profit.keySet()){
+            if(year_per_profit.containsKey(year-1)&&year_per_profit.get(year-1)>=year_per_profit.get(year)){
+                return false;
+            }
+        }
+        return true;
+
     }
 
 }

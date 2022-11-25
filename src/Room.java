@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -46,14 +47,18 @@ public class Room implements  ITestable{
         return true;
     }
     public boolean constraint_1(){
-        if(this.getRoomCategory().getType()!= RoomCategory.RoomType.VIP) {
+        if(!this.getRoomCategory().getType().equals(RoomCategory.RoomType.VIP)) {
             return true;
         }
-            for (HashMap.Entry<Service, HotelService> set :this.getHotel().getServices().entrySet()){
-                if(set.getKey().getClass()!=VipService.class){
-                    return false;
+            for (HashMap.Entry<Date, Booking> set :this.getBookings().entrySet()){
+                Booking bookings= set.getValue();
+                if(bookings.getServices()!=null) {
+                    for (HotelService service_in_hotel : bookings.getServices()) {
+                        if (!(service_in_hotel.getService() instanceof VipService)){
+                            return false;
+                        }
+                    }
                 }
-
 
             }
 

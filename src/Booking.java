@@ -56,7 +56,7 @@ public class Booking implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        return constraint_1();
+        return constraint_1()&& constraint_2();
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
@@ -74,5 +74,17 @@ public class Booking implements  ITestable{
         return true;
 
 
+    }
+    public boolean constraint_2(){
+        for(HotelService hotel_service:this.getServices()){
+            Hotel hotel_compare_1= hotel_service.getHotel();
+            if(this.getRoom()!=null){
+                Hotel hotel_compare_2=this.getRoom().getHotel();
+                if(!hotel_compare_1.equals(hotel_compare_2)){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
