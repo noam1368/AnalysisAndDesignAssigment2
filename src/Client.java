@@ -59,9 +59,12 @@ public class Client implements  ITestable {
             int counter= 0;
             if (set.getValue().getReservations().size()>=5){
                 for( Reservation reservation : set.getValue().getReservations()){
-                    if(reservation.getRoomCategory().getType()== RoomCategory.RoomType.VIP){
-                        counter++;
+                    if(reservation.getBookings()!=null) {
+                        if (reservation.getBookings().getRoom().getRoomCategory().getType().equals(RoomCategory.RoomType.VIP)) {
+                            counter++;
+                        }
                     }
+
                 }
                 if(counter==0){
                     return false;
@@ -74,7 +77,7 @@ public class Client implements  ITestable {
     public boolean constraint_2(){
         for(Map.Entry<Hotel,ReservationSet> set:this.reservationsHistory.entrySet()){
             for(Reservation reservation:set.getValue().getReservations()){
-                if(reservation.getRoomCategory().getType()== RoomCategory.RoomType.VIP&&reservation.getBookings()!=null){
+                if(reservation.getRoomCategory().getType().equals(RoomCategory.RoomType.VIP)&&reservation.getBookings()!=null){
                     if(reservation.getBookings().getReview()==null){
                         return false;
                     }
