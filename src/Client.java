@@ -45,10 +45,32 @@ public class Client implements  ITestable {
 
     @Override
     public boolean checkConstraints() {
-        return true;
+        return constraint_1();
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
+        return true;
+    }
+    public boolean constraint_1(){
+
+        for (HashMap.Entry<Hotel, ReservationSet> set :
+                this.reservationsHistory.entrySet()){
+            int counter= 0;
+            if (set.getValue().getReservations().size()>=5){
+                for( Reservation reservation : set.getValue().getReservations()){
+                    if(reservation.getBookings()!=null) {
+                        if (reservation.getBookings().getRoom().getRoomCategory().getType().equals(RoomCategory.RoomType.VIP)) {
+                            counter++;
+                        }
+                    }
+
+                }
+                if(counter==0){
+                    return false;
+                }
+
+            }
+        }
         return true;
     }
 }

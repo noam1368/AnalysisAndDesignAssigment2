@@ -45,4 +45,6 @@ public class Room implements  ITestable{
     public static boolean checkAllIntancesConstraints(Model model){
         return true;
     }
+
+
 }

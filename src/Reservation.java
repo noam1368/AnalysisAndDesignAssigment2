@@ -54,11 +54,21 @@ public class Reservation implements  ITestable {
 
     @Override
     public boolean checkConstraints() {
-        return true;
+        return constraint_1();
     }
 
     public static boolean checkAllIntancesConstraints(Model model) {
         return true;
+    }
+    public boolean constraint_1(){
+        Hotel hotel_set= this.getReservationSet().getHotel();
+        Hotel hotel_booking= this.booking.getRoom().getHotel();
+        if(hotel_set.getCity().equals(hotel_booking.getCity())&&hotel_set.getName().equals(hotel_booking.getName())&&hotel_set.getGroup().getGroupId()==hotel_booking.getGroup().getGroupId()){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 

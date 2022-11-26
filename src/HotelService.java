@@ -1,4 +1,5 @@
 import java.awt.print.Book;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class HotelService implements  ITestable{
@@ -49,10 +50,26 @@ public class HotelService implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
+        if(!constraint_1())
+            return false;
+
+
         return true;
     }
+
 
     public static boolean checkAllIntancesConstraints(Model model){
         return true;
     }
+
+    public boolean constraint_1(){
+        HashSet<Hotel> hotel_set= this.hotel.getGroup().getHotels();
+        for(Hotel hotel:hotel_set){
+            if(!hotel.getServices().containsKey(this.getService())){
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
