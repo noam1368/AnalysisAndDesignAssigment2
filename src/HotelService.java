@@ -50,11 +50,7 @@ public class HotelService implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        if(!constraint_1())
-            return false;
-
-
-        return true;
+       return true;
     }
 
 
@@ -62,14 +58,6 @@ public class HotelService implements  ITestable{
         return true;
     }
 
-    public boolean constraint_1(){
-        HashSet<Hotel> hotel_set= this.hotel.getGroup().getHotels();
-        for(Hotel hotel:hotel_set){
-            if(!hotel.getServices().containsKey(this.getService())){
-                return false;
-            }
-        }
-        return true;
-    }
+
 
 }

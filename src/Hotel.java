@@ -65,7 +65,7 @@ public class Hotel implements  ITestable{
         }
         if(!constraint_2())
             return false;
-        return  constraint_1();
+        return  true;
     }
 
     public static boolean checkAllIntancesConstraints(Model model){

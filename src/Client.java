@@ -53,8 +53,6 @@ public class Client implements  ITestable {
         return true;
     }
     public boolean constraint_1(){
-
-
         for (HashMap.Entry<Hotel, ReservationSet> set :
                 this.reservationsHistory.entrySet()){
             ArrayList<Booking> list_books= new ArrayList<>();
