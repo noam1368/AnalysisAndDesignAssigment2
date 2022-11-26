@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -53,22 +54,27 @@ public class Client implements  ITestable {
     }
     public boolean constraint_1(){
 
+
         for (HashMap.Entry<Hotel, ReservationSet> set :
                 this.reservationsHistory.entrySet()){
+            ArrayList<Booking> list_books= new ArrayList<>();
             int counter= 0;
             if (set.getValue().getReservations().size()>=5){
                 for( Reservation reservation : set.getValue().getReservations()){
                     if(reservation.getBookings()!=null) {
-                        if (reservation.getBookings().getRoom().getRoomCategory().getType().equals(RoomCategory.RoomType.VIP)) {
+                       list_books.add(reservation.getBookings());
+                        }
+                }
+                if(list_books.size()>=5){
+                    for(Booking book:list_books){
+                        if (book.getRoom().getRoomCategory().getType().equals(RoomCategory.RoomType.VIP)) {
                             counter++;
                         }
                     }
-
+                    if(counter==0){
+                        return false;
+                    }
                 }
-                if(counter==0){
-                    return false;
-                }
-
             }
         }
         return true;
