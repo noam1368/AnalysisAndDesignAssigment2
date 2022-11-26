@@ -60,6 +60,11 @@ public class Hotel implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
+        if(!constraint_1()){
+            return false;
+        }
+        if(!constraint_2())
+            return false;
         return  constraint_1();
     }
 
@@ -77,5 +82,21 @@ public class Hotel implements  ITestable{
         }
         return true;
 
+    }
+    public boolean constraint_2(){
+        double num_all_rooms= this.rooms.size();
+        double counter =0;
+        for (HashMap.Entry<Integer, Room> set : this.rooms.entrySet()){
+            if(set.getValue().getRoomCategory().getType()== RoomCategory.RoomType.VIP){
+                counter++;
+            }
+        }
+        double counter_divide_num_of_rooms= counter/num_all_rooms;
+        if(counter_divide_num_of_rooms>0.1){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }

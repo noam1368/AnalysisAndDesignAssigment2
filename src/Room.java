@@ -39,6 +39,8 @@ public class Room implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
+        if(!constraint_1())
+            return false;
         return true;
     }
 
@@ -46,5 +48,22 @@ public class Room implements  ITestable{
         return true;
     }
 
+    public boolean constraint_1(){
+        if(!this.getRoomCategory().getType().equals(RoomCategory.RoomType.VIP)) {
+            return true;
+        }
+        for (HashMap.Entry<Date, Booking> set :this.getBookings().entrySet()){
+            Booking bookings= set.getValue();
+            if(bookings.getServices()!=null) {
+                for (HotelService service_in_hotel : bookings.getServices()) {
+                    if (!(service_in_hotel.getService() instanceof VipService)){
+                        return false;
+                    }
+                }
+            }
 
+        }
+
+        return true;
+    }
 }

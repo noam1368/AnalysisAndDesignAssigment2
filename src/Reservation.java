@@ -54,7 +54,12 @@ public class Reservation implements  ITestable {
 
     @Override
     public boolean checkConstraints() {
-        return constraint_1();
+        if(!constraint_1())
+            return false;
+        if(!constraint_2())
+            return false;
+
+        return true;
     }
 
     public static boolean checkAllIntancesConstraints(Model model) {
@@ -69,6 +74,17 @@ public class Reservation implements  ITestable {
         else{
             return false;
         }
+    }
+
+    public boolean constraint_2(){
+        String las_vegas= new String("LAS VEGAS");
+        if(this.reservationSet.getHotel().getCity().toLowerCase().equals(las_vegas.toLowerCase())){
+            if(this.reservationSet.getClient().getAge()<21){
+                return false;
+            }
+
+        }
+        return true;
     }
 
 
