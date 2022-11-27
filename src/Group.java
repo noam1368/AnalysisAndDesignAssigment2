@@ -29,7 +29,7 @@ public class Group implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        return true;
+        return constaint_1();
     }
     public static boolean checkAllIntancesConstraints(Model model){
         return true;
