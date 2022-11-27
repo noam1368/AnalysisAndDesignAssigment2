@@ -65,6 +65,8 @@ public class Hotel implements  ITestable{
             return false;
         if(!constraint_2())
             return false;
+        if(!constraint_3())
+            return false;
         return true;
     }
 
@@ -99,4 +101,24 @@ public class Hotel implements  ITestable{
         }
         return true;
      }
+    public boolean constraint_3(){
+        double counter_reviews= 0;
+        double sum_rank=0;
+        if(this.getRate()==5&&this.getAllReservation()!=null){
+            for(HashMap.Entry<Client,ReservationSet> set : this.getAllReservation().entrySet()){
+                for(Reservation reservation:set.getValue().getReservations()){
+                    if(reservation.getBookings()!=null&&reservation.getBookings().getReview()!=null){
+                        counter_reviews++;
+                        sum_rank= sum_rank+reservation.getBookings().getReview().getRank();
+                    }
+                }
+            }
+            double average= sum_rank/counter_reviews;
+            if(average<=7.5){
+                return false;
+            }
+
+        }
+        return true;
+    }
 }
