@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class Hotel implements  ITestable{
     private String name;
@@ -67,6 +64,10 @@ public class Hotel implements  ITestable{
             return false;
         if(!constraint_3())
             return false;
+        if(!constraint_4())
+            return false;
+        if(!constraint_5())
+            return false;
         return true;
     }
 
@@ -120,5 +121,54 @@ public class Hotel implements  ITestable{
 
         }
         return true;
+    }
+    public boolean constraint_4(){
+        if(this.services!=null) {
+
+            for (HashMap.Entry<Service, HotelService> set : this.getServices().entrySet()) {
+                int counter_same_name_service = 0;
+                String service_name = set.getKey().getServiceName().toLowerCase();
+                for (HashMap.Entry<Service, HotelService> set_2 : this.getServices().entrySet()) {
+                    if (service_name.equals(set_2.getKey().serviceName.toLowerCase())) {
+                        counter_same_name_service++;
+                    }
+                }
+                if (counter_same_name_service > 1) {
+                    return false;
+                }
+            }
+        }
+       return true;
+    }
+
+    public  boolean constraint_5(){
+        if(this.getServices()!=null) {
+            Calendar calendar = Calendar.getInstance();
+
+            HashMap<Integer, Integer> year_per_profit = new HashMap<Integer, Integer>();
+            for (HashMap.Entry<Service, HotelService> set : this.getServices().entrySet()) {
+                if (set.getValue().getGivenServices() != null) {
+                    for (Booking bookings_of_service : set.getValue().getGivenServices()) {
+                        Date date_of_service = bookings_of_service.getDate();
+                        calendar.setTime(date_of_service);
+                        Integer integer_casting = Integer.valueOf(calendar.get(Calendar.YEAR));
+                        if (!year_per_profit.containsKey(integer_casting))
+                            year_per_profit.put(integer_casting, set.getValue().getPrice());
+                        else {
+                            year_per_profit.put(integer_casting, year_per_profit.get(integer_casting) + set.getValue().getPrice());
+                        }
+                    }
+
+
+                }
+            }
+            for (Integer year : year_per_profit.keySet()) {
+                if (year_per_profit.containsKey(year - 1) && year_per_profit.get(year - 1) >= year_per_profit.get(year)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+
     }
 }

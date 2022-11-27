@@ -65,17 +65,31 @@ public class Booking implements  ITestable{
         return true;
     }
 
-    public boolean constraint_1(){
-        RoomCategory.RoomType type_room =this.reservation.getRoomCategory().getType();
-        if((this.room.getRoomCategory().getType()== RoomCategory.RoomType.BASIC)&&(type_room== RoomCategory.RoomType.VIP)||
-                type_room== RoomCategory.RoomType.SUITE){
-            return false;
+//    public boolean constraint_1(){
+//        RoomCategory.RoomType type_room =this.reservation.getRoomCategory().getType();
+//        if((this.room.getRoomCategory().getType()== RoomCategory.RoomType.BASIC)&&(type_room== RoomCategory.RoomType.VIP)||
+//                type_room== RoomCategory.RoomType.SUITE){
+//            return false;
+//        }
+//        if(this.room.getRoomCategory().getType()==RoomCategory.RoomType.SUITE&&type_room==RoomCategory.RoomType.VIP){
+//            return false;
+//        }
+//        return true;
+//
+//
+//    }
+public boolean constraint_1(){
+        if(this.getServices()!=null) {
+            for (HotelService hotel_service : this.getServices()) {
+                Hotel hotel_compare_1 = hotel_service.getHotel();
+                if (this.getRoom() != null) {
+                    Hotel hotel_compare_2 = this.getRoom().getHotel();
+                    if (!hotel_compare_1.equals(hotel_compare_2)) {
+                        return false;
+                    }
+                }
+            }
         }
-        if(this.room.getRoomCategory().getType()==RoomCategory.RoomType.SUITE&&type_room==RoomCategory.RoomType.VIP){
-            return false;
-        }
-        return true;
-
-
-    }
+    return true;
+}
 }
