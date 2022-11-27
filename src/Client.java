@@ -48,6 +48,8 @@ public class Client implements  ITestable {
     public boolean checkConstraints() {
         if(!constraint_1())
             return false;
+        if(!constraint_2())
+            return false;
         return true;
     }
 
@@ -77,6 +79,22 @@ public class Client implements  ITestable {
                         return false;
                     }
                 }
+            }
+        }
+        return true;
+    }
+    public boolean constraint_2(){
+        if(this.reservationsHistory!=null) {
+            for (HashMap.Entry<Hotel, ReservationSet> set : this.reservationsHistory.entrySet()) {
+                for (Reservation reservation : set.getValue().getReservations()) {
+                    if (reservation.getBookings() != null) {
+                        for (HotelService service_kind : reservation.getBookings().getServices())
+                            if ((service_kind.getService() instanceof VipService) && reservation.getBookings().getReview() == null) {
+                                return false;
+                            }
+                    }
+                }
+
             }
         }
         return true;

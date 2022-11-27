@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class Hotel implements  ITestable{
     private String name;
@@ -60,26 +61,42 @@ public class Hotel implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-//        if(!constraint_1())
-//            return false;
+        if(!constraint_1())
+            return false;
+        if(!constraint_2())
+            return false;
         return true;
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
         return true;
     }
+
     public boolean constraint_1(){
-        HashSet<Hotel> temp_hash_hotel= this.group.getHotels();
-        int counter=0;
-        for(Hotel hotel:temp_hash_hotel){
-            String city_hotel_lowercase= hotel.getCity().toLowerCase();
-            if(city_hotel_lowercase.equals(this.city.toLowerCase())) {
-                counter++;
+        if(this.rooms!=null) {
+            double num_all_rooms = this.rooms.size();
+            double counter = 0;
+            for (HashMap.Entry<Integer, Room> set : this.rooms.entrySet()) {
+                if (set.getValue().getRoomCategory().getType().equals(RoomCategory.RoomType.VIP)) {
+                    counter++;
+                }
+            }
+            double counter_divide_num_of_rooms = counter / num_all_rooms;
+            if (counter_divide_num_of_rooms > 0.1) {
+                return false;
             }
         }
-        if(counter>1)
-            return false;
         return true;
-
     }
+     public boolean constraint_2(){
+        String las_vegas= "LAS VEGAS";
+        if(this.allReservation!=null&&this.city.toLowerCase().equals(las_vegas.toLowerCase())){
+            for(HashMap.Entry<Client,ReservationSet> set:this.allReservation.entrySet()){
+                if(set.getKey().getAge()<21){
+                    return false;
+                }
+            }
+        }
+        return true;
+     }
 }
