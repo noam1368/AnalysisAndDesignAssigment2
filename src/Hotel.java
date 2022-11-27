@@ -60,8 +60,8 @@ public class Hotel implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        if(!constraint_1())
-            return false;
+//        if(!constraint_1())
+//            return false;
         return true;
     }
 
