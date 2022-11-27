@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Hotel implements  ITestable{
     private String name;
@@ -59,10 +60,26 @@ public class Hotel implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
+        if(!constraint_1())
+            return false;
         return true;
     }
 
     public static boolean checkAllIntancesConstraints(Model model){
         return true;
+    }
+    public boolean constraint_1(){
+        HashSet<Hotel> temp_hash_hotel= this.group.getHotels();
+        int counter=0;
+        for(Hotel hotel:temp_hash_hotel){
+            String city_hotel_lowercase= hotel.getCity().toLowerCase();
+            if(city_hotel_lowercase.equals(this.city.toLowerCase())) {
+                counter++;
+            }
+        }
+        if(counter>1)
+            return false;
+        return true;
+
     }
 }
