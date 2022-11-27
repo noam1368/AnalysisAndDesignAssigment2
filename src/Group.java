@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class Group implements  ITestable{
     private int groupId;
@@ -27,7 +29,11 @@ public class Group implements  ITestable{
 
     @Override
     public boolean checkConstraints() {
-        return Constraint_1();
+        if(!Constraint_1())
+            return false;
+        if(!constaint_2())
+            return false;
+        return true;
     }
     public static boolean checkAllIntancesConstraints(Model model){
         return true;
@@ -48,4 +54,18 @@ public class Group implements  ITestable{
         }
         return true;
     }
+
+    public boolean constaint_2(){
+        if(hotels!=null){
+            for(Hotel hotel:this.hotels){
+                for(HashMap.Entry<Service, HotelService> set:hotel.getServices().entrySet()){
+                    for(Hotel hotel_2:this.hotels){
+                        if(!hotel_2.getServices().containsKey(set.getKey()))
+                            return false;
+                    }
+                }
+            }
+            }
+        return true;
+        }
 }

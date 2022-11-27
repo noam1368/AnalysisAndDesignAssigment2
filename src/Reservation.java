@@ -61,14 +61,15 @@ public class Reservation implements  ITestable {
         return true;
     }
     public boolean constraint_1(){
+
         Hotel hotel_set= this.getReservationSet().getHotel();
-        Hotel hotel_booking= this.booking.getRoom().getHotel();
-        if(!hotel_set.equals(hotel_booking)){
-            return false;
+        if(this.getBookings()!=null) {
+            Hotel hotel_booking = this.booking.getRoom().getHotel();
+            if (!hotel_set.equals(hotel_booking)) {
+                return false;
+            } 
         }
-        else{
-            return true;
-        }
+        return true;
     }
 
 
